@@ -51,6 +51,10 @@ body {
     z-index: 10;
 }
 
+.btn_container path {
+    cursor: pointer;
+}
+
 .btn {
     opacity: 0.4;
 }
@@ -86,13 +90,13 @@ body {
     fill: #00f;
 }
 
-.btn_container--purple {
+.btn_container--red {
     bottom: 30px;
     left: 32px;
 }
 
-.btn_purple {
-    fill: #93278F;
+.btn_red {
+    fill: #ff0000;
 }
 
 .buttons {
