@@ -47,6 +47,9 @@ MemoSound.prototype.resetGame = function() {
         this.memoSequence[i] = getRandomLight(this.memoSequence[i - 1]);
     }
     
+    // Advance to stage 1
+    this.advanceStage();
+    
     return this;
 }
 

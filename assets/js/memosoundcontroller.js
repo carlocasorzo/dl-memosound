@@ -108,7 +108,7 @@ MemoSoundController.prototype.captureUserInput = function(i) {
 }
 
 // Plays one stage of the game
-MemoSoundController.prototype.playStage = function() {
+MemoSoundController.prototype.playGame = function() {
     // Reset user input to store current stage's input
     this.userInput = [];
     // Show current stage sequence to player
@@ -149,7 +149,7 @@ MemoSoundController.prototype.validateUserInput = function() {
     if(isStageCleared) {
         console.log("Stage cleared!");
         this.advanceStage();
-        this.playStage();
+        this.playGame();
     } else {
         console.log("Game Over");
     }
