@@ -19,6 +19,7 @@
         <header>
             
             <h1 class="page_title"> MemoSound </h1>
+            <div id="message-area" class="message-area"></div>
             
         </header>
         
@@ -26,8 +27,8 @@
             
             <div class="info_panel">
                 <div class="info">
-                    <label for="level">Nivel: </label>
-                    <input type="text" name="level" id="level" value="0" disabled />
+                    <label for="stage">Nivel: </label>
+                    <input type="text" name="stage" id="stage" value="0" disabled />
                 </div>
                 <div class="info">
                     <label for="score">Puntaje: </label>
@@ -71,9 +72,13 @@
             
             
             <div class="buttons">
-                <button class="btn_play">Start Game</button>
-                <button class="btn_stop">Stop Game</button>
+                <button id="btn-play" class="btn_play">Start Game</button>
+                <button id="btn-stop" class="btn_stop">Reset Game</button>
             </div>
+            
+            <audio id="btn-beep">
+              <source src="assets/sounds/beep.wav" type="audio/wav">
+            </audio>
             
         </section>    
         
@@ -91,6 +96,7 @@
 
         <!-- JAVASCRIPTS -->
         <script src="assets/js/memosound.js"></script>
+        <script src="assets/js/userinput.js"></script>
         <script src="assets/js/memosoundcontroller.js"></script>
         <script src="assets/js/main.js"></script>
 
