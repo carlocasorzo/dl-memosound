@@ -72,9 +72,22 @@ MemoSoundController.prototype.numLights = function() {
     return this.memoSound.numLights;
 }
 
+// Delegates score to memoSound
+MemoSoundController.prototype.score = function() {
+    return this.memoSound.score;
+}
+
+// Delegates stage to memoSound
+MemoSoundController.prototype.stage = function() {
+    return this.memoSound.stage;
+}
+
 // Delegates advanceStage() to memoSound
 MemoSoundController.prototype.advanceStage = function(repetitions) {
-    return this.memoSound.advanceStage(repetitions);
+    var nextStage = this.memoSound.advanceStage(repetitions);
+    $('#score').val(this.score());
+    $('#stage').val(this.stage());
+    return nextStage;
 }
 
 // Delegates getStage() to memoSound
