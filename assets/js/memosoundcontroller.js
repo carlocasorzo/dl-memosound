@@ -8,6 +8,10 @@ function MemoSoundController(options) {
     // Set message area from the DOM
     this.messageArea = $("#message-area");
     
+    // Get button sound beep from the DOM
+    
+    this.beep = $('#btn-beep');
+    
     // Set sequence step duration
     this.stepDuration = options.stepDuration || 900;
     
@@ -49,9 +53,14 @@ function MemoSoundController(options) {
     });
 }
 
+// Plays beep when button is on
+MemoSoundController.prototype.playBeep = function() {
+    return this.beep[0].play();
+}
 
 // Turns the given light on
 MemoSoundController.prototype.turnOn = function(i){
+    this.playBeep();
     return this.lights[i].addClass('btn-on');
 } 
 
