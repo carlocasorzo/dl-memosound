@@ -1,6 +1,6 @@
 'use strict';
 
 var m = new MemoSoundController({
-    // numStages: 5,
+    numStages: 10,
     numLights: 4
 });

@@ -5,6 +5,9 @@ function MemoSoundController(options) {
     // Init MemoSound model
     this.memoSound = new MemoSound(options);
     
+    // Set message area from the DOM
+    this.messageArea = $("#message-area");
+    
     // Set sequence step duration
     this.stepDuration = options.stepDuration || 900;
     
@@ -21,7 +24,7 @@ function MemoSoundController(options) {
         this.lights[i] = $(btnId);
     }
     
-    // Add mouse up/down listeners to buttons
+    // Add listeners to buttons
     var self = this;
     $.each(this.lights, function(index, button) {
         button.find("path")
@@ -34,6 +37,15 @@ function MemoSoundController(options) {
             .click(function() {
                 if(self.canCaptureUserInput) { self.captureUserInput(index); }
             });
+    });
+    
+    $('#btn-stop').click(function() {
+        self.resetGame();
+    });
+    
+    $('#btn-play').click(function() {
+        self.resetGame();
+        self.playGame();
     });
 }
 
@@ -59,7 +71,10 @@ MemoSoundController.prototype.turnOffAll = function(){
 
 // Resets the game delegating to memoSound
 MemoSoundController.prototype.resetGame = function() {
-    return this.memoSound.resetGame();
+    var newGame = this.memoSound.resetGame();
+    this.messageArea.text("Game started");
+    this.updateCounters();
+    return newGame;
 }
 
 // Delegates numStages to memoSound
@@ -85,14 +100,18 @@ MemoSoundController.prototype.stage = function() {
 // Delegates advanceStage() to memoSound
 MemoSoundController.prototype.advanceStage = function(repetitions) {
     var nextStage = this.memoSound.advanceStage(repetitions);
-    $('#score').val(this.score());
-    $('#stage').val(this.stage());
+    this.updateCounters();
     return nextStage;
 }
 
 // Delegates getStage() to memoSound
 MemoSoundController.prototype.getStage = function() {
     return this.memoSound.getStage();
+}
+
+// Delegates stage to memoSound
+MemoSoundController.prototype.stage = function() {
+    return this.memoSound.stage;
 }
 
 // Handles button behavior on mouse down
@@ -105,12 +124,18 @@ MemoSoundController.prototype.clickLightUp = function(i) {
     return this.turnOff(i);
 }
 
+// Updates the score and stage inputs
+MemoSoundController.prototype.updateCounters = function() {
+    $('#score').val(this.score());
+    $('#stage').val(this.stage());
+ 
+}
+
 // Handles button behavior on click
 // Lets user enter the current stage sequence and captures it for validation
 MemoSoundController.prototype.captureUserInput = function(i) {
     if(this.userInput.length < this.getStage().length) {
         this.userInput.push(i);
-        console.log(this.userInput);
     } 
     
     if(this.userInput.length >= this.getStage().length) {
@@ -159,11 +184,14 @@ MemoSoundController.prototype.showCurrentStageLights = function() {
 // Lets user enter the current stage sequence and captures it for validation
 MemoSoundController.prototype.validateUserInput = function() {
     var isStageCleared = this.memoSound.validate(this.userInput);
-    if(isStageCleared) {
-        console.log("Stage cleared!");
+    
+    if(isStageCleared && this.stage() === this.numStages()) {
+        this.messageArea.text("Congratulations, you won!");
+    } else if(isStageCleared) {
+        this.messageArea.text("Stage "+ this.stage() +" cleared!");
         this.advanceStage();
         this.playGame();
     } else {
-        console.log("Game Over");
+        this.messageArea.text("Game Over");
     }
 }
